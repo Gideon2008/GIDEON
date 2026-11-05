@@ -1,77 +1,68 @@
 OUNCES_PER_POUND = 16
 DEFAULT_MOOD = "content"
-mood = DEFAULT_MOOD
 
-feedings = 0
-drinks = 0
+class Baby:
+    def __init__(self, name, birthdate, ounces = 130, height = 20):
+        self.name = name
+        self.birthdate = birthdate
+        self.weight_oz = ounces
+        self.height_in = height
+        self.mood = DEFAULT_MOOD
+        self.feedings = 0
+        self.drinks = 0
+    def eat(self):
+        print("Num Num Num Nom Num")
+        self.weight_oz += 11
+        self.feedings += 1
+        self.mood = "happy"
+    def drink(self):
+        print("gulp, gulp, gulp, burp, gulp")
+        self.weight_oz += 8
+        self.drinks += 1
+        self.mood = "content"
+    def poop(self):
+        print("Baby Poops")
+        self.weight_oz -= 5
+    def pee(self):
+        print("Baby Pees")
+        self.weight_oz -= 4
+    def laugh(self):
+        print("Baby laughs")
+        self.mood = "happy"
+    def cry(self):
+        print("Wahhh wah wah bahahahahah wahhhawah")
+        self.mood = "sad"
+    def sleep(self):
+        print("ZZZZZZZZZZZZZZZZZZZzzzzzzzzzz")
+        self.mood = "content"
+    def display_status(self):
+        print("Baby Name:", self.name)
+        print("Birthdate:", self.birthdate)
+        print("Current Weight in oz:", self.weight_oz)
+        print("Current Weight in decimal pounds:", self.weight_oz / OUNCES_PER_POUND, "lbs")
+        print("Height:", self.height_in, "in")
+        print("Mood:", self.mood)
+        print("Feedings:", self.feedings)
+        print("Drinks:", self.drinks)
 
 baby_name = input("What is the baby's name?: ")
 birthdate = input("What is the baby's birthdate?: ")
 ounces = int(input("What is the baby's weight in ounces?: "))
 height = float(input("What is the baby's height in inches?: "))
 
-pounds = ounces / OUNCES_PER_POUND
+baby = Baby(baby_name, birthdate, ounces, height)
+baby2 = Baby("John", "3/19/2017", 40, 32)
+
 
 print()
 print("--- BABY STATUS ---")
-print("Name:", baby_name)
-print("Birthdate:", birthdate)
-print("Weight:", ounces, "oz")
-print("Weight in pounds:", pounds, "lb")
-print("Height:", height, "in")
-print("Mood:", mood)
-print("")
-
-
-def eat(current_weight_oz, feedings, mood):
-    print("Num Num Num Nom Num")
-    current_weight_oz += 11
-    feedings += 1
-    mood = "happy"
-    return current_weight_oz, feedings, mood
-
-
-def drink(current_weight_oz, drinks, mood):
-    print("gulp, gulp, gulp, burp, gulp")
-    current_weight_oz += 8
-    drinks += 1
-    mood = "content"
-    return current_weight_oz, drinks, mood
-
-def poop(current_weight_oz):
-    print("Baby Poops")
-    current_weight_oz -= 5
-    return current_weight_oz
-
-def pee(current_weight_oz):
-    print("Baby Pees")
-    current_weight_oz -= 4
-    return current_weight_oz
-
-def sleep(mood):
-    mood = "content"
-    print("ZZZZZZZZZZZZZZZZZZZzzzzzzzzzz")
-    print("")
-    return mood
-
-def cry(mood):
-    mood = "sad"
-    print("Wahhh wah wah bahahahahah wahhhawah")
-    print("")
-    return mood
-
-def display_status(baby_name, current_weight_oz, mood, feedings, drinks):
-    current_pounds = current_weight_oz / OUNCES_PER_POUND
-    print("Baby Name:", baby_name)
-    print("Current Weight in oz:", current_weight_oz)
-    print("Current Weight in decimal pounds:", current_pounds, "lbs")
-    print("Mood:", mood)
-    print("Feedings:", feedings)
-    print("Drinks:", drinks)
+baby.display_status()
+print()
+baby2.display_status()
+print()
 
 
 action = ""
-current_weight_oz = ounces
 poop_count = 0
 pee_count = 0
 burp_count = 0
@@ -79,54 +70,52 @@ burp_count = 0
 while action != "home":
     action = input("What action would you like your baby to do (eat, drink, sleep, cry, laugh, status, home)?: ").lower()
     if action == "eat":
-        current_weight_oz, feedings, mood = eat(current_weight_oz, feedings, mood)
+        baby.eat()
         poop_count += 1
         burp_count += 1
+        
         if(poop_count % 3 == 0):
-            current_weight_oz =poop(current_weight_oz)
+            baby.poop()
+            
         if(burp_count % 3 ==0):
             print("*Baby burps*")
-        print("")
+        print()
 
     elif action == "drink":
-        current_weight_oz, drinks, mood = drink(current_weight_oz, drinks, mood)
+        baby.drink()
         pee_count += 1
         burp_count += 1
+
         if(pee_count % 3 == 0):
-            current_weight_oz = pee(current_weight_oz)
+            baby.pee()
+            
         if(burp_count % 3 ==0):
             print("*Baby burps*")
-        print("")
+        print()
 
     elif action == "sleep":
-        mood = sleep(mood)
+        baby.sleep()
 
     elif action == "cry":
-        mood = cry(mood)
+        baby.cry()
 
     elif action == "status":
-        print("")
-        display_status(baby_name, current_weight_oz, mood, feedings, drinks)
-        print("")
+        print()
+        baby.display_status()
+        print()
 
     elif action == "laugh":
-        print("Baby laughs")
-        mood = "happy"
-        print("")
+        baby.laugh()
+        print()
 
     elif action == "home":
         print("Going Home")
-        print("")
+        print()
 
     else:
         print("Unknown action — try again.")
-        print("")
+        print()
 
-current_pounds = current_weight_oz / OUNCES_PER_POUND
+
 print("-- Final Baby Status Report --")
-print("Baby Name:", baby_name)
-print("Current Weight in oz:", current_weight_oz)
-print("Current Weight in decimal pounds:", current_pounds, "lbs")
-print("Mood:", mood)
-print("Feedings:", feedings)
-print("Drinks:", drinks)
+baby.display_status()
