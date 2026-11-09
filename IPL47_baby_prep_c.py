@@ -64,6 +64,8 @@ birthdate = input("What is the baby's birthdate?: ")
 ounces = int(input("What is the baby's weight in ounces?: "))
 height = float(input("What is the baby's height in inches?: "))
 
+starting_weight_oz = ounces
+
 baby = Baby(baby_name, birthdate, ounces, height)
 baby2 = Baby("John", "3/19/2017", 40, 32)
 
@@ -82,7 +84,7 @@ pee_count = 0
 burp_count = 0
 
 while action != "home":
-    action = input("What action would you like your baby to do (eat, drink, sleep, cry, laugh, status, home)?: ").lower()
+    action = input("What action would you like your baby to do (eat, drink, sleep, cry, laugh, scream, status, home)?: ").lower()
     if action == "eat":
         food = input("What would you like your baby to eat (vegetables, cereal, or other)?: ").lower()
         baby.eat(food)
@@ -129,9 +131,19 @@ while action != "home":
         print("Going Home")
         print()
 
+    elif action == "scream":
+        baby.scream()
+        print()
+
     else:
         print("Unknown action — try again.")
         print()
+
+
+    if (baby.weight_oz >= starting_weight_oz * 2):
+        print("Baby has become too fat to be considered a baby anymore! Congratulations! Welcome to having a toddler!")
+        print()
+        break
 
 
 print("-- Final Baby Status Report --")
