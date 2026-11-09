@@ -10,15 +10,26 @@ class Baby:
         self.mood = DEFAULT_MOOD
         self.feedings = 0
         self.drinks = 0
-    def eat(self):
+        self.eats = 0
+    def eat(self, food = "vegetables"):
         print("Num Num Num Nom Num")
         self.weight_oz += 11
         self.feedings += 1
-        self.mood = "happy"
+        self.eats += 1
+        if food == "vegetables":
+            print("Baby eats vegetables")
+            baby.cry()
+        elif food == "cereal":
+            print("Baby eats cereal")
+            baby.sleep()
+        else:
+            print("Baby eats", food)
+            baby.laugh()
     def drink(self):
         print("gulp, gulp, gulp, burp, gulp")
         self.weight_oz += 8
         self.drinks += 1
+        self.feedings += 1
         self.mood = "content"
     def poop(self):
         print("Baby Poops")
@@ -35,6 +46,8 @@ class Baby:
     def sleep(self):
         print("ZZZZZZZZZZZZZZZZZZZzzzzzzzzzz")
         self.mood = "content"
+    def scream(self):
+        print("Ahhhhhhhhhhhhhhhhhhhhhh")
     def display_status(self):
         print("Baby Name:", self.name)
         print("Birthdate:", self.birthdate)
@@ -43,6 +56,7 @@ class Baby:
         print("Height:", self.height_in, "in")
         print("Mood:", self.mood)
         print("Feedings:", self.feedings)
+        print("Eats:", self.eats)
         print("Drinks:", self.drinks)
 
 baby_name = input("What is the baby's name?: ")
@@ -70,7 +84,8 @@ burp_count = 0
 while action != "home":
     action = input("What action would you like your baby to do (eat, drink, sleep, cry, laugh, status, home)?: ").lower()
     if action == "eat":
-        baby.eat()
+        food = input("What would you like your baby to eat (vegetables, cereal, or other)?: ").lower()
+        baby.eat(food)
         poop_count += 1
         burp_count += 1
         
@@ -79,6 +94,7 @@ while action != "home":
             
         if(burp_count % 3 ==0):
             print("*Baby burps*")
+            baby.mood = "happy"
         print()
 
     elif action == "drink":
@@ -91,6 +107,7 @@ while action != "home":
             
         if(burp_count % 3 ==0):
             print("*Baby burps*")
+            baby.mood = "happy"
         print()
 
     elif action == "sleep":
