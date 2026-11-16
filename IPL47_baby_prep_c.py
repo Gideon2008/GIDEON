@@ -1,3 +1,6 @@
+from datetime import date 
+import time
+ACTION_DELAY_SECONDS = 1 
 OUNCES_PER_POUND = 16
 DEFAULT_MOOD = "content"
 
@@ -16,7 +19,7 @@ class Baby:
         self.weight_oz += 11
         self.feedings += 1
         self.eats += 1
-        if food == "vegetables":
+        if food == "vegetables" or food == "":
             print("Baby eats vegetables")
             baby.cry()
         elif food == "cereal":
@@ -46,8 +49,11 @@ class Baby:
     def sleep(self):
         print("ZZZZZZZZZZZZZZZZZZZzzzzzzzzzz")
         self.mood = "content"
+        time.sleep(ACTION_DELAY_SECONDS)
     def scream(self):
         print("Ahhhhhhhhhhhhhhhhhhhhhh")
+        self.mood = "angry"
+        time.sleep(ACTION_DELAY_SECONDS)
     def display_status(self):
         print("Baby Name:", self.name)
         print("Birthdate:", self.birthdate)
@@ -61,21 +67,36 @@ class Baby:
 
 baby_name = input("What is the baby's name?: ")
 birthdate = input("What is the baby's birthdate?: ")
-ounces = int(input("What is the baby's weight in ounces?: "))
-height = float(input("What is the baby's height in inches?: "))
+
+if birthdate == "":
+    birthdate = date.today() 
+
+ounces = input("What is the baby's weight in ounces?: ")
+
+if ounces == "":
+    ounces = 130
+else:
+    ounces = int(ounces)
+
+height = input("What is the baby's height in inches?: ")
+
+if height == "":
+    height = 20
+else:
+    height = float(height)
 
 starting_weight_oz = ounces
 
 baby = Baby(baby_name, birthdate, ounces, height)
-baby2 = Baby("John", "3/19/2017", 40, 32)
+#baby2 = Baby("John", "3/19/2017", 40, 32)
 
 
 print()
 print("--- BABY STATUS ---")
 baby.display_status()
 print()
-baby2.display_status()
-print()
+#baby2.display_status()
+#print()
 
 
 action = ""
@@ -84,9 +105,9 @@ pee_count = 0
 burp_count = 0
 
 while action != "home":
-    action = input("What action would you like your baby to do (eat, drink, sleep, cry, laugh, scream, status, home)?: ").lower()
+    action = input("What action would you like your baby to do (eat, drink, sleep, cry, laugh, scream, status, home)?: ").strip().lower()
     if action == "eat":
-        food = input("What would you like your baby to eat (vegetables, cereal, or other)?: ").lower()
+        food = input("What would you like your baby to eat (vegetables, cereal, or other)?: ").strip().lower()
         baby.eat(food)
         poop_count += 1
         burp_count += 1
@@ -114,9 +135,11 @@ while action != "home":
 
     elif action == "sleep":
         baby.sleep()
+        print()
 
     elif action == "cry":
         baby.cry()
+        print()
 
     elif action == "status":
         print()
@@ -139,12 +162,10 @@ while action != "home":
         print("Unknown action — try again.")
         print()
 
-
     if (baby.weight_oz >= starting_weight_oz * 2):
         print("Baby has become too fat to be considered a baby anymore! Congratulations! Welcome to having a toddler!")
         print()
         break
-
 
 print("-- Final Baby Status Report --")
 baby.display_status()
