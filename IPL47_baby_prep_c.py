@@ -19,15 +19,18 @@ class Baby:
         self.weight_oz += 11
         self.feedings += 1
         self.eats += 1
-        if food == "vegetables" or food == "":
+        if food == "vegetables"  or food == "":
             print("Baby eats vegetables")
             baby.cry()
         elif food == "cereal":
             print("Baby eats cereal")
             baby.sleep()
-        else:
+        elif food == "fruit" or food == "goodies":
             print("Baby eats", food)
             baby.laugh()
+        else:
+            print("Baby eats", food)
+            baby.mood == "content"
     def drink(self):
         print("gulp, gulp, gulp, burp, gulp")
         self.weight_oz += 8
@@ -37,9 +40,11 @@ class Baby:
     def poop(self):
         print("Baby Poops")
         self.weight_oz -= 5
+        self.mood = "content"
     def pee(self):
         print("Baby Pees")
         self.weight_oz -= 4
+        self.mood = "content"
     def laugh(self):
         print("Baby laughs")
         self.mood = "happy"
@@ -52,7 +57,7 @@ class Baby:
         time.sleep(ACTION_DELAY_SECONDS)
     def scream(self):
         print("Ahhhhhhhhhhhhhhhhhhhhhh")
-        self.mood = "angry"
+        self.mood = "mad"
         time.sleep(ACTION_DELAY_SECONDS)
     def display_status(self):
         print("Baby Name:", self.name)
@@ -107,7 +112,7 @@ burp_count = 0
 while action != "home":
     action = input("What action would you like your baby to do (eat, drink, sleep, cry, laugh, scream, status, home)?: ").strip().lower()
     if action == "eat":
-        food = input("What would you like your baby to eat (vegetables, cereal, or other)?: ").strip().lower()
+        food = input("What would you like your baby to eat (vegetables, fruit/goodies, cereal, or other)?: ").strip().lower()
         baby.eat(food)
         poop_count += 1
         burp_count += 1
